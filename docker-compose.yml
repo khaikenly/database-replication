@@ -1,0 +1,29 @@
+---
+services:
+  master:
+    image: postgres:16
+    container_name: master
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_PASSWORD: postgres
+    volumes:
+      - ./v/master_data:/var/lib/postgresql/data
+    networks:
+      - pgnet
+  
+  standby:
+    image: postgres:16
+    container_name: standby
+    ports:
+      - "5433:5432"
+    environment:
+      POSTGRES_PASSWORD: postgres
+    volumes:
+      - ./v/standby_data:/var/lib/postgresql/data
+    networks:
+      - pgnet
+
+networks:
+  pgnet:
+    driver: bridge
